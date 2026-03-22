@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Portal — Compliance Made Simple | BlackRoad Gov</title>
+<meta name="description" content="Regulatory compliance dashboard for startups. SEC filing tracker, GDPR/CCPA tools, contract management, IP portfolio management. Built for founders navigating legal complexity.">
+<meta name="keywords" content="compliance, legal, SEC, GDPR, CCPA, contract management, IP portfolio, startup legal, BlackRoad">
+<meta property="og:title" content="Legal Portal — Compliance Made Simple">
+<meta property="og:description" content="Regulatory compliance dashboard. SEC filings, GDPR/CCPA, contracts, IP — all in one place.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --gradient:linear-gradient(90deg,#FF6B2B,#FF2255,#CC00AA,#8844FF,#4488FF,#00D4FF);
+    --bg:#000;--surface:#0a0a0a;--card-border:#1a1a1a;
+    --text-primary:#fff;--text-secondary:#a0a0a0;--text-muted:#666;
+    --font-heading:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text-primary);font-family:var(--font-heading);line-height:1.6;overflow-x:hidden}
+  .gradient-line{height:3px;background:var(--gradient);width:100%}
+  nav{position:fixed;top:3px;left:0;right:0;z-index:1000;background:rgba(0,0,0,.92);border-bottom:1px solid var(--card-border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+  .nav-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+  .nav-logo{width:36px;height:36px;background:var(--gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:#000}
+  .nav-title{font-size:1.25rem;font-weight:600;color:var(--text-primary)}
+  .nav-links{display:flex;gap:2rem;align-items:center}
+  .nav-links a{color:var(--text-secondary);text-decoration:none;font-size:.9rem;transition:color .2s}
+  .nav-links a:hover{color:var(--text-primary)}
+  .nav-cta{background:var(--gradient)!important;color:#000!important;padding:.5rem 1.25rem;border-radius:6px;font-weight:600!important}
+
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8rem 2rem 4rem;position:relative}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(136,68,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(136,68,255,.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none}
+  .hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border:1px solid var(--card-border);border-radius:100px;font-size:.8rem;color:var(--text-secondary);margin-bottom:2rem;font-family:var(--font-mono)}
+  .hero-badge-dot{width:8px;height:8px;background:#8844FF;border-radius:50%;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .hero h1{font-size:clamp(3rem,7vw,5.5rem);font-weight:700;line-height:1.05;margin-bottom:1.5rem;letter-spacing:-.03em}
+  .gt{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero p{font-size:1.25rem;color:var(--text-secondary);max-width:640px;margin:0 auto 2.5rem;line-height:1.7}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+  .btn-primary{background:var(--gradient);color:#000;padding:.85rem 2rem;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;font-family:var(--font-heading);transition:transform .2s,box-shadow .2s}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(136,68,255,.3)}
+  .btn-secondary{background:transparent;color:var(--text-primary);padding:.85rem 2rem;border:1px solid var(--card-border);border-radius:8px;font-size:1rem;font-weight:500;cursor:pointer;text-decoration:none;transition:border-color .2s}
+  .btn-secondary:hover{border-color:#444}
+
+  .stats-bar{display:flex;justify-content:center;gap:4rem;margin-top:5rem;padding-top:3rem;border-top:1px solid var(--card-border);flex-wrap:wrap}
+  .stat-item{text-align:center}
+  .stat-value{font-size:2.5rem;font-weight:700;font-family:var(--font-mono);background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .stat-label{font-size:.85rem;color:var(--text-muted);margin-top:.25rem}
+
+  section{padding:6rem 2rem}
+  .container{max-width:1200px;margin:0 auto}
+  .section-header{text-align:center;max-width:700px;margin:0 auto 4rem}
+  .section-header h2{font-size:2.75rem;font-weight:700;margin-bottom:1rem;letter-spacing:-.02em}
+  .section-header p{color:var(--text-secondary);font-size:1.1rem;line-height:1.7}
+
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem}
+  .feature-card{background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:2rem;transition:border-color .3s}
+  .feature-card:hover{border-color:#333}
+  .feature-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.25rem;background:linear-gradient(135deg,rgba(136,68,255,.15),rgba(0,212,255,.15));border:1px solid var(--card-border)}
+  .feature-card h3{font-size:1.2rem;font-weight:600;margin-bottom:.75rem}
+  .feature-card p{color:var(--text-secondary);font-size:.95rem;line-height:1.65}
+
+  /* Compliance modules */
+  .modules-section{background:var(--surface);border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border)}
+  .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+  .module-card{background:var(--bg);border:1px solid var(--card-border);border-radius:12px;padding:2rem;position:relative;overflow:hidden;transition:border-color .3s}
+  .module-card:hover{border-color:#333}
+  .module-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient);opacity:0;transition:opacity .3s}
+  .module-card:hover::before{opacity:1}
+  .module-emoji{font-size:2.5rem;display:block;margin-bottom:1rem}
+  .module-card h3{font-size:1.15rem;font-weight:600;margin-bottom:.5rem}
+  .module-card p{color:var(--text-secondary);font-size:.9rem;line-height:1.6;margin-bottom:1rem}
+  .module-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+  .module-tag{background:rgba(255,255,255,.05);border:1px solid var(--card-border);color:var(--text-muted);padding:.2rem .6rem;border-radius:4px;font-size:.75rem;font-family:var(--font-mono)}
+
+  /* Timeline */
+  .timeline-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+  .timeline-card{background:var(--surface);border:1px solid var(--card-border);border-radius:12px;padding:2rem;margin-bottom:1.5rem}
+  .timeline-card h3{font-size:1.1rem;font-weight:600;margin-bottom:.5rem}
+  .timeline-card p{color:var(--text-secondary);font-size:.9rem;line-height:1.6}
+  .timeline-date{font-family:var(--font-mono);font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.5rem}
+  .timeline-status{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-family:var(--font-mono);font-weight:600}
+  .status-done{background:rgba(0,212,255,.1);color:#00D4FF}
+  .status-pending{background:rgba(255,107,43,.1);color:#FF6B2B}
+
+  /* Document types */
+  .doc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+  .doc-item{background:var(--surface);border:1px solid var(--card-border);border-radius:10px;padding:1.5rem;text-align:center;transition:border-color .3s}
+  .doc-item:hover{border-color:#333}
+  .doc-item .emoji{font-size:2rem;display:block;margin-bottom:.75rem}
+  .doc-item h4{font-size:.9rem;font-weight:600;margin-bottom:.25rem}
+  .doc-item p{font-size:.75rem;color:var(--text-muted)}
+
+  /* CTA */
+  .cta-section{padding:8rem 2rem;text-align:center;position:relative}
+  .cta-section::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(136,68,255,.08) 0%,transparent 70%);pointer-events:none}
+  .cta-section h2{font-size:3rem;font-weight:700;margin-bottom:1.25rem;letter-spacing:-.02em}
+  .cta-section p{color:var(--text-secondary);font-size:1.15rem;max-width:550px;margin:0 auto 2.5rem;line-height:1.7}
+
+  footer{border-top:1px solid var(--card-border);padding:4rem 2rem 2rem}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto}
+  .footer-brand p{color:var(--text-muted);font-size:.85rem;line-height:1.6;margin-top:1rem}
+  .footer-col h4{font-size:.8rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem}
+  .footer-col a{display:block;color:var(--text-secondary);text-decoration:none;font-size:.9rem;margin-bottom:.5rem;transition:color .2s}
+  .footer-col a:hover{color:var(--text-primary)}
+  .footer-bottom{max-width:1200px;margin:3rem auto 0;padding-top:2rem;border-top:1px solid var(--card-border);display:flex;justify-content:space-between;align-items:center;color:var(--text-muted);font-size:.8rem;font-family:var(--font-mono)}
+
+  /* Checklist section */
+  .checklist-section{background:var(--surface);border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border)}
+  .checklist-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:.75rem}
+  .checklist li{display:flex;align-items:center;gap:.75rem;color:var(--text-secondary);font-size:.95rem;padding:.5rem;background:var(--bg);border:1px solid var(--card-border);border-radius:8px}
+  .checklist li::before{content:'\2713';color:#00D4FF;font-weight:700;width:24px;text-align:center;flex-shrink:0}
+
+  @media(max-width:768px){
+    .timeline-grid,.checklist-grid{grid-template-columns:1fr}
+    .footer-grid{grid-template-columns:1fr 1fr}
+    .nav-links{display:none}
+    .stats-bar{gap:2rem}
+  }
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .animate-in{animation:fadeInUp .6s ease-out forwards}
+  .delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.3s}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#222;border-radius:3px}
+</style>
+</head>
+<body>
+<div class="gradient-line"></div>
+<nav>
+  <a href="#" class="nav-brand"><div class="nav-logo">LP</div><span class="nav-title">Legal Portal</span></a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#modules">Modules</a>
+    <a href="#documents">Documents</a>
+    <a href="#checklist">Checklist</a>
+    <a href="https://github.com/BlackRoad-Gov/legal-portal">GitHub</a>
+    <a href="#cta" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-badge"><div class="hero-badge-dot"></div><span>BlackRoad Gov</span></div>
+  <h1 class="animate-in">Compliance<br><span class="gt">Made Simple</span></h1>
+  <p class="animate-in delay-1">
+    Regulatory compliance dashboard built for startups navigating formation, employment law,
+    data privacy, and IP protection. SEC filing tracker, GDPR/CCPA tools, contract management,
+    and IP portfolio — all in one sovereign platform. No legal background required.
+  </p>
+  <div class="hero-actions animate-in delay-2">
+    <a href="#cta" class="btn-primary">Start Compliance Check</a>
+    <a href="#features" class="btn-secondary">Explore Modules</a>
+  </div>
+  <div class="stats-bar animate-in delay-3">
+    <div class="stat-item"><div class="stat-value">6</div><div class="stat-label">Compliance Modules</div></div>
+    <div class="stat-item"><div class="stat-value">50+</div><div class="stat-label">Document Templates</div></div>
+    <div class="stat-item"><div class="stat-value">100%</div><div class="stat-label">Self-Hosted</div></div>
+    <div class="stat-item"><div class="stat-value">24/7</div><div class="stat-label">Deadline Monitoring</div></div>
+  </div>
+</section>
+
+<section id="features" class="container">
+  <div class="section-header">
+    <h2>Legal Infrastructure for <span class="gt">Founders</span></h2>
+    <p>BlackRoad OS, Inc. was formed as a Delaware C-Corp through Stripe Atlas.
+    We built Legal Portal because we needed it ourselves. Every feature solves a real problem we faced.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">&#128220;</div>
+      <h3>SEC Filing Tracker</h3>
+      <p>Track all required filings with automated deadline reminders. Form 1120, quarterly
+      estimates, state annual reports, beneficial ownership reports. Never miss a filing
+      deadline again. Calendar integration with Google Calendar and iCal.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128274;</div>
+      <h3>GDPR / CCPA Compliance</h3>
+      <p>Data mapping tool to inventory all personal data your product collects. Automated
+      privacy policy generator. Data subject request workflow. Cookie consent management.
+      Breach notification templates with regulatory timelines.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128196;</div>
+      <h3>Contract Management</h3>
+      <p>Template library for common startup contracts: employment agreements, NDAs, contractor
+      agreements, SaaS terms, vendor agreements. Version control for all documents. Signature
+      tracking with expiration alerts.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128161;</div>
+      <h3>IP Portfolio</h3>
+      <p>Track patents, trademarks, copyrights, and trade secrets. Filing deadline management
+      for provisional and non-provisional patents. Domain portfolio management. Open source
+      license compliance scanning for your codebase.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128101;</div>
+      <h3>Employment Law</h3>
+      <p>State-specific employment law guides. Offer letter and employment agreement templates.
+      Equity grant management with 83(b) election tracking. Worker classification guidance
+      (W-2 vs 1099). Leave policy compliance by state.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#127970;</div>
+      <h3>Corporate Governance</h3>
+      <p>Board resolution templates. Meeting minute recording. Bylaws management with amendment
+      tracking. Stock certificate registry. Cap table integration. Annual meeting scheduling
+      and compliance tracking.</p>
+    </div>
+  </div>
+</section>
+
+<section id="modules" class="modules-section" style="padding:6rem 2rem;">
+  <div class="container">
+    <div class="section-header">
+      <h2>Six Compliance <span class="gt">Modules</span></h2>
+      <p>Each module is independently useful. Together they form a complete legal operating system for your company.</p>
+    </div>
+    <div class="modules-grid">
+      <div class="module-card">
+        <span class="module-emoji">&#127963;</span>
+        <h3>Formation &amp; Entity</h3>
+        <p>Certificate of Incorporation, Bylaws, EIN applications, registered agent management,
+        stock authorization, initial board actions. Everything from day zero.</p>
+        <div class="module-tags">
+          <span class="module-tag">Delaware</span><span class="module-tag">C-Corp</span>
+          <span class="module-tag">S-Corp</span><span class="module-tag">LLC</span>
+        </div>
+      </div>
+      <div class="module-card">
+        <span class="module-emoji">&#128176;</span>
+        <h3>Tax &amp; Filing</h3>
+        <p>Federal and state tax calendar. Form 1120 preparation checklist. Quarterly estimated
+        tax reminders. Sales tax nexus tracker. 83(b) election filing with 30-day countdown.</p>
+        <div class="module-tags">
+          <span class="module-tag">IRS</span><span class="module-tag">Form 1120</span>
+          <span class="module-tag">83(b)</span><span class="module-tag">state tax</span>
+        </div>
+      </div>
+      <div class="module-card">
+        <span class="module-emoji">&#128272;</span>
+        <h3>Data Privacy</h3>
+        <p>GDPR, CCPA, CPRA, PIPEDA compliance workflows. Data processing agreements.
+        Privacy impact assessments. Cookie consent banners. Data subject access request handling.</p>
+        <div class="module-tags">
+          <span class="module-tag">GDPR</span><span class="module-tag">CCPA</span>
+          <span class="module-tag">CPRA</span><span class="module-tag">PIPEDA</span>
+        </div>
+      </div>
+      <div class="module-card">
+        <span class="module-emoji">&#128221;</span>
+        <h3>Contracts</h3>
+        <p>50+ contract templates. Version tracking. Key term extraction. Expiration and renewal
+        alerts. Counterparty management. Amendment workflows. Digital signature integration.</p>
+        <div class="module-tags">
+          <span class="module-tag">NDA</span><span class="module-tag">SaaS</span>
+          <span class="module-tag">employment</span><span class="module-tag">vendor</span>
+        </div>
+      </div>
+      <div class="module-card">
+        <span class="module-emoji">&#128161;</span>
+        <h3>Intellectual Property</h3>
+        <p>Patent, trademark, and copyright portfolio. Filing deadline management. Prior art
+        search integration. License compliance scanning. Trade secret documentation.</p>
+        <div class="module-tags">
+          <span class="module-tag">patents</span><span class="module-tag">trademarks</span>
+          <span class="module-tag">copyright</span><span class="module-tag">trade secrets</span>
+        </div>
+      </div>
+      <div class="module-card">
+        <span class="module-emoji">&#128101;</span>
+        <h3>Employment</h3>
+        <p>Offer letters, employment agreements, contractor agreements. Equity grant tracking
+        with vesting schedules. Benefits compliance. State-specific leave policies. I-9 verification.</p>
+        <div class="module-tags">
+          <span class="module-tag">W-2</span><span class="module-tag">1099</span>
+          <span class="module-tag">equity</span><span class="module-tag">benefits</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="section-header">
+    <h2>Formation <span class="gt">Timeline</span></h2>
+    <p>Based on BlackRoad OS, Inc.'s own formation. A real-world timeline of what it takes to go from idea to incorporated.</p>
+  </div>
+  <div class="timeline-grid">
+    <div>
+      <div class="timeline-card">
+        <span class="timeline-date">Day 1</span>
+        <span class="timeline-status status-done">Complete</span>
+        <h3>Certificate of Incorporation</h3>
+        <p>Filed with Delaware Division of Corporations. 10M shares Common Stock authorized at $0.00001 par value. Registered agent: Legalinc Corporate Services Inc.</p>
+      </div>
+      <div class="timeline-card">
+        <span class="timeline-date">Day 1-3</span>
+        <span class="timeline-status status-done">Complete</span>
+        <h3>EIN &amp; Board Actions</h3>
+        <p>IRS Form SS-4 submitted. EIN received. Initial board actions: adoption of bylaws, appointment of officers, authorization of stock issuance, banking resolution.</p>
+      </div>
+      <div class="timeline-card">
+        <span class="timeline-date">Day 3-7</span>
+        <span class="timeline-status status-done">Complete</span>
+        <h3>Stock &amp; Equity</h3>
+        <p>Restricted Stock Purchase Agreement executed. Stock certificates issued. 83(b) election filed with IRS within 30-day window. CIIAA signed by all founders.</p>
+      </div>
+    </div>
+    <div>
+      <div class="timeline-card">
+        <span class="timeline-date">Day 7-14</span>
+        <span class="timeline-status status-done">Complete</span>
+        <h3>Banking &amp; Stripe</h3>
+        <p>Corporate bank account opened. Stripe Atlas integration for payment processing. Accounting system setup. Chart of accounts configured for Delaware C-Corp.</p>
+      </div>
+      <div class="timeline-card">
+        <span class="timeline-date">Day 14-30</span>
+        <span class="timeline-status status-done">Complete</span>
+        <h3>IP Assignment &amp; Indemnification</h3>
+        <p>Intellectual property assignment agreements executed. Indemnification agreements for officers and directors. Form 8821 filed for tax representative authorization.</p>
+      </div>
+      <div class="timeline-card">
+        <span class="timeline-date">Ongoing</span>
+        <span class="timeline-status status-pending">Active</span>
+        <h3>Compliance Monitoring</h3>
+        <p>Annual report filings, franchise tax, Form 1120 preparation, beneficial ownership reporting. Legal Portal monitors all deadlines automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="documents" class="container">
+  <div class="section-header">
+    <h2>Document <span class="gt">Library</span></h2>
+    <p>Pre-built templates for every document a startup needs, from formation to fundraising.</p>
+  </div>
+  <div class="doc-grid">
+    <div class="doc-item"><span class="emoji">&#128196;</span><h4>Certificate of Inc.</h4><p>Delaware C-Corp</p></div>
+    <div class="doc-item"><span class="emoji">&#128214;</span><h4>Bylaws</h4><p>Corporate governance</p></div>
+    <div class="doc-item"><span class="emoji">&#128176;</span><h4>83(b) Election</h4><p>IRS tax election</p></div>
+    <div class="doc-item"><span class="emoji">&#128203;</span><h4>RSPA</h4><p>Stock purchase</p></div>
+    <div class="doc-item"><span class="emoji">&#128274;</span><h4>CIIAA</h4><p>IP assignment</p></div>
+    <div class="doc-item"><span class="emoji">&#128221;</span><h4>NDA</h4><p>Confidentiality</p></div>
+    <div class="doc-item"><span class="emoji">&#128101;</span><h4>Offer Letter</h4><p>Employment</p></div>
+    <div class="doc-item"><span class="emoji">&#128188;</span><h4>Contractor Agmt</h4><p>1099 workers</p></div>
+    <div class="doc-item"><span class="emoji">&#128187;</span><h4>SaaS Terms</h4><p>Service agreement</p></div>
+    <div class="doc-item"><span class="emoji">&#128272;</span><h4>Privacy Policy</h4><p>GDPR/CCPA ready</p></div>
+    <div class="doc-item"><span class="emoji">&#128220;</span><h4>Board Resolution</h4><p>Corporate actions</p></div>
+    <div class="doc-item"><span class="emoji">&#128176;</span><h4>SAFE Note</h4><p>Fundraising</p></div>
+  </div>
+</section>
+
+<section id="checklist" class="checklist-section" style="padding:6rem 2rem;">
+  <div class="container">
+    <div class="checklist-grid">
+      <div>
+        <h2 style="font-size:2.5rem;font-weight:700;margin-bottom:1.25rem;">
+          Startup Legal<br><span class="gt">Checklist</span>
+        </h2>
+        <p style="color:var(--text-secondary);font-size:1.05rem;line-height:1.7;margin-bottom:1.5rem;">
+          Legal Portal generates a personalized compliance checklist based on your entity type,
+          state of incorporation, number of employees, and business model. Track progress
+          in real-time and get alerts before deadlines.
+        </p>
+        <p style="color:var(--text-secondary);font-size:1.05rem;line-height:1.7;">
+          This isn't a static document. It's a living dashboard that updates as regulations change,
+          as your company grows, and as new compliance requirements emerge. Built by founders
+          who believe legal compliance shouldn't require a law degree.
+        </p>
+      </div>
+      <div>
+        <ul class="checklist">
+          <li>Certificate of Incorporation filed</li>
+          <li>EIN obtained from IRS</li>
+          <li>Bylaws adopted by board</li>
+          <li>Stock authorized and issued</li>
+          <li>83(b) election filed (30-day window)</li>
+          <li>CIIAA signed by all founders</li>
+          <li>Corporate bank account opened</li>
+          <li>Privacy policy published</li>
+          <li>Terms of service published</li>
+          <li>Beneficial ownership report filed</li>
+          <li>State annual report filed</li>
+          <li>Delaware franchise tax paid</li>
+          <li>Form 1120 filed by April 15</li>
+          <li>Worker classification reviewed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta" class="cta-section">
+  <h2>Stay Compliant.<br><span class="gt">Stay Focused.</span></h2>
+  <p>Legal complexity shouldn't slow down your product. Legal Portal handles compliance
+  so you can focus on building. Self-hosted. Your documents never leave your infrastructure.</p>
+  <div class="hero-actions">
+    <a href="#" class="btn-primary">Start Free Compliance Check</a>
+    <a href="https://github.com/BlackRoad-Gov/legal-portal" class="btn-secondary">View on GitHub</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:.75rem;">
+        <div class="nav-logo">LP</div><span class="nav-title">Legal Portal</span>
+      </div>
+      <p>Compliance made simple for startups. Built by BlackRoad Gov. SEC filings,
+      GDPR/CCPA, contracts, IP — all self-hosted. Your legal documents never leave
+      your infrastructure. Pave Tomorrow.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#features">Features</a><a href="#modules">Modules</a><a href="#documents">Documents</a><a href="#">Docs</a><a href="#">Changelog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Compliance Guide</a><a href="#">Template Library</a><a href="#">Formation Guide</a><a href="#">Community</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="https://blackroad.io">BlackRoad OS</a><a href="https://github.com/BlackRoad-Gov">BlackRoad Gov</a><a href="#">Privacy</a><a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 BlackRoad OS, Inc. All rights reserved.</span>
+    <span>legal.blackroad.io</span>
+  </div>
+</footer>
+</body>
+</html>
