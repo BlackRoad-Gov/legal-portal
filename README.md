@@ -1,5 +1,13 @@
 # legal-portal
 
+> Legal Portal — Compliance Made Simple
+
+Part of the [BlackRoad OS](https://blackroad.io) ecosystem — [BlackRoad-Gov](https://github.com/BlackRoad-Gov)
+
+---
+
+# legal-portal
+
 Legal Portal — Compliance Made Simple
 
 **BlackRoad-Gov** — Governance — compliance, policy
